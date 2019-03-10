@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>MSA tubemapper (alpha)</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/css/style.css">
+    </head>
+
+    <body>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <div class="container">
+            <header>
+                <h1>MSA tubemapper (alpha)</h1>
+            </header>
+        </div>
+
+        <hr>
+        <div id='app'>
+
+            <div class="container">
+                <ul class="nav nav-tabs" id="tab-item">
+                    <li class="nav-item">
+                        <a href="#tab_paste" class="nav-link" data-toggle="tab">Paste</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#tab_upload" class="nav-link" data-toggle="tab">Upload</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#tab_demo" class="nav-link active" data-toggle="tab">Demo data</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="tab-content">
+                    <div id="tab_paste" class="tab-pane">
+                        <div class="container">
+                            <form action="/browse_tubemap" method="post">
+                                <div class="form-group">
+                                    <label for="textarea">Paste a set of sequence in FASTA format</label>
+                                    <textarea id="textarea" name="textarea" rows="5" style="width: 100%" class="form-control"
+                                        placeholder="FASTA format" wrap="off"></textarea>
+                                </div>
+                                <button class="btn btn-primary" v-on:click="tubemapHandler(0, $event)">Submit</button>
+                                <!-- <button type="button" class="btn btn-primary" id="form-button">Submit</button> -->
+                            </form>
+                        </div>
+                    </div>
+                    <div id="tab_upload" class="tab-pane">
+                        <p>Not aveilable</p>
+                    </div>
+                    <div id="tab_demo" class="tab-pane active">
+                        <div class="container">
+                            <!-- <p>Select data</p> -->
+                            <div class="form-group">
+                                <p>Select data</p>
+                                <!-- <label for="demodata">Select data</label> -->
+                                <select class="form-control">
+                                    <option>Toy data</option>
+                                    <option>KO0000</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary" v-on:click="tubemapHandler(2, $event)">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="col-md-6 col-md-offset-3">
+                    <svg id="svg"></svg>
+                </div>
+                <div id="legendDiv"></div>
+                <!-- <div id="legendDiv"></div> -->
+            </div>
+            <div class="container">
+                <!-- <input type="radio" id="compressed" value -->
+                <label for="checkCompressed">Compressed:</label>
+                    <input type="checkbox" name="checkbox" id="checkCompressed" v-model="isCompressed" @change="compressNodes">
+            </div>
+            
+            <div class="container">
+                <label for="plainColors">
+                    plainColors:
+                    <input type="radio" id="plainColors" name="radio" class="btn-primary" value="plainColors" v-model="haplotypeColors" @click="changeColor('plainColors')">
+                </label>
+                <label for="lightColors">
+                    lightColors:
+                    <input type="radio" id="lightColors" name="radio" class="btn-primary" value="lightColors" v-model="haplotypeColors" @click="changeColor('lightColors')">
+                </label>
+                <label for="greys">
+                    greys:
+                    <input type="radio" id="greys" name="radio" class="btn-primary" value="greys" v-model="haplotypeColors" @click="changeColor('greys')">
+                </label>
+                <label for="blues">
+                    blues:
+                    <input type="radio" id="blues" name="radio" class="btn-primary" value="blues" v-model="haplotypeColors" @click="changeColor('blues')">
+                </label>
+                <label for="reds">
+                    reds:
+                    <input type="radio" id="reds" name="radio" class="btn-primary" values="reds" v-model="haplotypeColors" @click="changeColor('reds')">
+                </label>
+            </div>
+
+
+
+            <!-- <div class="container">
+                <pre>
+                    [[ $data ]]
+                </pre>
+            </div> -->
+        </div>
+
+
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+        <script src="/static/js/tubemap.js"></script>
+        <script src="/static/js/view.js"></script>
+
+    </body>
+</html>
