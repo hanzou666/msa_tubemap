@@ -5,6 +5,7 @@ verify_ssl = true
 
 [dev-packages]
 flake8 = "*"
+autopep8 = "*"
 
 [packages]
 flask = "*"
@@ -17,3 +18,4 @@ python_version = "3.7"
 [scripts]
 start = "python3 app.py"
 lint = "flake8 ."
+fix = "autopep8 -ivr ."

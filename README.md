@@ -3,10 +3,10 @@
 # Start
 
 ```bash
-$ git clone --recursive  https://github.com/hanzou666/msa_tubemap.git
+$ git clone --recursive https://github.com/hanzou666/msa_tubemap.git
 $ cd msa_tubemap
 $ pipenv install Pipfile
-$ pipenv run ./server.py
+$ pipenv run start
 ```
 
 Go to `http://localhost:8000/browse_tubemap`

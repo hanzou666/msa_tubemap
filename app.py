@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 from flask import Flask, render_template, request, jsonify
-from werkzeug import secure_filename
+# from werkzeug import secure_filename
 from api.msa2gfa import msa2gfa
+
 
 class CustomFlask(Flask):
     jinja_options = Flask.jinja_options.copy()
@@ -16,7 +17,9 @@ class CustomFlask(Flask):
         comment_end_string='#)',
     ))
 
+
 app = CustomFlask(__name__)
+
 
 # Routing
 @app.route('/')
@@ -31,7 +34,6 @@ def browse_tubemap():
 
 @app.route('/output_graph', methods=['POST'])
 def output_graph():
-    fasta_dic = {}
     if request.json['type'] == 'paste':
         vg_like_graph = parse_paste(request.json['fasta'])
     elif request.json['type'] == 'demo':
