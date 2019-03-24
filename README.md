@@ -1,17 +1,16 @@
 # MSA Tube Map
 
-# Start
+## Start
 
 ```bash
-$ git clone --recursive https://github.com/hanzou666/msa_tubemap.git
-$ cd msa_tubemap
-$ pipenv install Pipfile
-$ pipenv run start
+git clone --recursive https://github.com/hanzou666/msa_tubemap.git
+cd msa_tubemap
+pipenv install
+pipenv run start
 ```
 
-Go to `http://localhost:8000/browse_tubemap`
+Go to `http://localhost:5000/msa_tubemap`
 
-
-# Input file
+## Input file
 
 This application accepts a FASTA format file after multiple sequence alignment.
