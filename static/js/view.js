@@ -32,7 +32,7 @@ let app = new Vue({
                 'Accept': 'application/json',
                 'Content-type': 'application/json'
             };
-            fetch("/output_graph", { method, headers, body })
+            fetch("/graph", { method, headers, body })
                 .then((res) => res.json())
                 .then(function (myJson) {
                     if (Object.keys(myJson).length != 0){

@@ -27,12 +27,12 @@ def index():
     return "Hello, World!"
 
 
-@app.route('/browse_tubemap', methods=['GET'])
+@app.route('/msa_tubemap', methods=['GET'])
 def browse_tubemap():
     return render_template('index.html')
 
 
-@app.route('/output_graph', methods=['POST'])
+@app.route('/graph', methods=['POST'])
 def output_graph():
     if request.json['type'] == 'paste':
         vg_like_graph = parse_paste(request.json['fasta'])
