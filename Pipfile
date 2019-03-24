@@ -9,8 +9,6 @@ autopep8 = "*"
 
 [packages]
 flask = "*"
-flake8 = "*"
-pipfile = "*"
 
 [requires]
 python_version = "3.7"
