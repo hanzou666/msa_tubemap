@@ -23,9 +23,9 @@
                     <li class="nav-item">
                         <a href="#tab_paste" class="nav-link" data-toggle="tab">Paste</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a href="#tab_upload" class="nav-link" data-toggle="tab">Upload</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a href="#tab_demo" class="nav-link active" data-toggle="tab">Demo data</a>
                     </li>
@@ -35,8 +35,8 @@
                     <div id="tab_paste" class="tab-pane">
                         <div class="container">
                             <form action="/browse_tubemap" method="post">
-                                <div class="form-group">
-                                    <label for="textarea">Paste a set of sequence in FASTA format</label>
+                            <div class="form-group">
+                                    <label for="textarea"><br>Paste a set of sequence in FASTA format</label>
                                     <textarea id="textarea" name="textarea" rows="5" style="width: 100%" class="form-control"
                                         placeholder="FASTA format" wrap="off"></textarea>
                                 </div>
@@ -45,18 +45,18 @@
                             </form>
                         </div>
                     </div>
-                    <div id="tab_upload" class="tab-pane">
-                        <p>Not aveilable</p>
-                    </div>
+                    <!-- <div id="tab_upload" class="tab-pane">
+                        <p>Not available</p>
+                    </div> -->
                     <div id="tab_demo" class="tab-pane active">
                         <div class="container">
                             <!-- <p>Select data</p> -->
                             <div class="form-group">
-                                <p>Select data</p>
-                                <!-- <label for="demodata">Select data</label> -->
-                                <select class="form-control">
+                                <!-- <br><p>Select data</p> -->
+                                <label for="demodata"><br>Select data</label>
+                                <select id="demodata" class="form-control">
                                     <option>Toy data</option>
-                                    <option>KO0000</option>
+                                    <!-- <option>KO0000</option> -->
                                 </select>
                             </div>
                             <button class="btn btn-primary" v-on:click="tubemapHandler(2, $event)">Submit</button>
@@ -66,7 +66,7 @@
             </div>
 
             <div class="container">
-                <div class="col-md-6 col-md-offset-3">
+                <div class="tubemap">
                     <svg id="svg"></svg>
                 </div>
                 <div id="legendDiv"></div>
@@ -114,7 +114,7 @@
         <script src="https://d3js.org/d3.v3.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js"></script>
         <script src="/static/js/tubemap.js"></script>
         <script src="/static/js/view.js"></script>
 
