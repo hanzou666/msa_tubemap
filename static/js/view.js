@@ -11,6 +11,7 @@ let app = new Vue({
         haplotypeColorsList: ['plainColors', 'lightColors', 'greys', 'blues', 'reds'],
         // nodeWidth: 0
         isCompressed: false,
+        nogname: null,
     },
     methods: {
         tubemapHandler: function(submitType, event) {
@@ -20,47 +21,32 @@ let app = new Vue({
                 'Accept': 'application/json',
                 'Content-type': 'application/json'
             };
-
+            let body;
+            let url;
             if (submitType === 0) {
-                const body = JSON.stringify({ 'fasta': document.getElementById("textarea").value });
-                fetch("/graph/custom", { method, headers, body })
-                    .then((res) => res.json())
-                    .then(function (myJson) {
-                        if (Object.keys(myJson).length != 0) {
-                            this.nodes = vgExtractNodes(myJson);
-                            this.tracks = vgExtractTracks(myJson);
-                            // this.reads = vgExtractReads(this.nodes, this.tracks, []);
-                            create({
-                                svgID: '#svg',
-                                nodes: this.nodes,
-                                tracks: this.tracks
-                            })
-                        }
-                    })
-                    .catch(console.error);
+                body = JSON.stringify({ 'fasta': document.getElementById("textarea").value });
+                url = "/graph/custom";
             } else if (submitType === 2) {
-                const nogname = document.getElementById("nogname").value;
-                fetch("/graph/eggNOG/" + nogname, { method, headers})
-                    .then((res) => res.json())
-                    .then(function (myJson) {
-                        if (Object.keys(myJson).length != 0) {
-                            this.nodes = vgExtractNodes(myJson);
-                            this.tracks = vgExtractTracks(myJson);
-                            // this.reads = vgExtractReads(this.nodes, this.tracks, []);
-                            create({
-                                svgID: '#svg',
-                                nodes: this.nodes,
-                                tracks: this.tracks
-                            })
-                        }
-                    })
-                    .catch(console.error);
-            } else {
-                console.log('Unknown submit')
-                return 1
+                body = {}
+                console.log
+                url = "/graph/eggNOG/" + this.nogname;
             }
 
-           
+            fetch(url, { method, headers, body })
+                .then((res) => res.json())
+                .then(function (myJson) {
+                    if (Object.keys(myJson).length != 0) {
+                        this.nodes = vgExtractNodes(myJson);
+                        this.tracks = vgExtractTracks(myJson);
+                        // this.reads = vgExtractReads(this.nodes, this.tracks, []);
+                        create({
+                            svgID: '#svg',
+                            nodes: this.nodes,
+                            tracks: this.tracks
+                        })
+                    }
+                })
+                .catch(console.error);
         },
         compressNodes: function(){
             // this.isCompressed = !this.isCompressed
