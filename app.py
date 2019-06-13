@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from datetime import timedelta
-import json
 
 import requests
 import requests_cache
