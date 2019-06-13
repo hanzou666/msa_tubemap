@@ -80,11 +80,5 @@ def mfa2graph(fasta_dic):
     return vg_like_graph
 
 
-def parse_demo_data():
-    fasta_dic = msa2gfa.parse_fasta('./demo_data/toy_data/msa.fa')
-    vg_like_graph, _ = msa2gfa.extract_graph(fasta_dic, 1)
-    return vg_like_graph
-
-
 if __name__ == '__main__':
     app.run()
