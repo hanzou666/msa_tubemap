@@ -25,7 +25,7 @@ class CustomFlask(Flask):
 eggnog_url_syntax = 'http://eggnogapi.embl.de/nog_data/json/trimmed_alg/'
 
 requests_cache.install_cache(
-    cache_name='eggNOG', backend='memory', expire_after=timedelta(hours=24))
+    cache_name='eggNOG', backend='sqlite', expire_after=timedelta(hours=1))
 
 app = CustomFlask(__name__)
 
