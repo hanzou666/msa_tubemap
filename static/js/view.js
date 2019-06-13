@@ -11,7 +11,6 @@ let app = new Vue({
         haplotypeColorsList: ['plainColors', 'lightColors', 'greys', 'blues', 'reds'],
         // nodeWidth: 0
         isCompressed: false,
-        // svgID: '#svg'
     },
     methods: {
         tubemapHandler: function(submitType, event) {
@@ -54,9 +53,7 @@ let app = new Vue({
             setNodeWidthOption(this.isCompressed ? 2 : 0);
         },
         changeColor: function(color) {
-            // console.log('hc=%s, ac=%s', this.haplotypeColors, color);
             setColorSet('haplotypeColors', color);
-            // console.log('hc=%s, ac=%s', this.haplotypeColors, color);
         }
     }
 })
