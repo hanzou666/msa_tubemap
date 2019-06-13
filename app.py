@@ -44,8 +44,8 @@ def browse_tubemap():
 
 @app.route('/graph/custom', methods=['POST'])
 def graph_from_custom_data():
-    vg_like_graph = parse_paste(request.json['fasta'])
-    return jsonify(vg_like_graph)
+    fasta_dic = parse_fasta_str(request.json['fasta'])
+    return jsonify(mfa2graph(fasta_dic))
 
 
 @app.route('/graph/eggNOG/<nogname>', methods=['POST'])
@@ -53,22 +53,28 @@ def graph_from_eggNOG_api(nogname):
     url = eggnog_url_syntax + nogname
     print(url)
     data = requests.get(url).json()
-    vg_like_graph = parse_paste(data['raw_alg'])
-    return jsonify(vg_like_graph)
+    fasta_dic = parse_fasta_str(data['raw_alg'])
+    return jsonify(mfa2graph(fasta_dic))
 
 
-def parse_paste(fasta_str):
+def parse_fasta_str(fasta_str):
     fasta_dic = {}
     for tmpline in fasta_str.split('\n'):
         if len(tmpline) < 1:
             continue
         if tmpline[0] == '>':
+            if (len(fasta_dic) > 100):
+                return fasta_dic
             header = tmpline.rstrip().split()
             seq_name = header[0][1:]
             fasta_dic[seq_name] = ''
         else:
             fasta_dic[seq_name] += tmpline.rstrip()
-    if fasta_dic == {}:
+    return fasta_dic
+
+
+def mfa2graph(fasta_dic):
+    if len(fasta_dic) == 0:
         return {}
     vg_like_graph, _ = msa2gfa.extract_graph(fasta_dic, 1)
     return vg_like_graph
