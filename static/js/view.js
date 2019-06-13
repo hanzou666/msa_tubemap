@@ -19,11 +19,12 @@ let app = new Vue({
             const method = "POST";
             let body;
             if (submitType === 0){
-                body = JSON.stringify({ 'fasta': document.getElementById("textarea").value, 'type': "paste" })
+                body = JSON.stringify({ 'fasta': document.getElementById("textarea").value, 'type': "custom" })
             } else if (submitType === 1){
                 console.log(submitType)
             } else if (submitType === 2) {
-                body = JSON.stringify({ 'fasta': null, 'type': 'demo' })
+                body = JSON.stringify({ 'fasta': null, 'type': 'eggnog', 'nogname': document.getElementById("nogname").value })
+                console.log(body)
             } else {
                 console.log('Unknown submit')
                 return 1
