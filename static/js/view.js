@@ -16,37 +16,51 @@ let app = new Vue({
         tubemapHandler: function(submitType, event) {
             event.preventDefault();
             const method = "POST";
-            let body;
-            if (submitType === 0){
-                body = JSON.stringify({ 'fasta': document.getElementById("textarea").value, 'type': "custom" })
-            } else if (submitType === 1){
-                console.log(submitType)
-            } else if (submitType === 2) {
-                body = JSON.stringify({ 'fasta': null, 'type': 'eggnog', 'nogname': document.getElementById("nogname").value })
-                console.log(body)
-            } else {
-                console.log('Unknown submit')
-                return 1
-            }
             const headers = {
                 'Accept': 'application/json',
                 'Content-type': 'application/json'
             };
-            fetch("/graph", { method, headers, body })
-                .then((res) => res.json())
-                .then(function (myJson) {
-                    if (Object.keys(myJson).length != 0){
-                        this.nodes = vgExtractNodes(myJson);
-                        this.tracks = vgExtractTracks(myJson);
-                        // this.reads = vgExtractReads(this.nodes, this.tracks, []);
-                        create({
-                            svgID: '#svg',
-                            nodes: this.nodes,
-                            tracks: this.tracks
-                        })
-                    }
-                })
-                .catch(console.error);
+
+            if (submitType === 0) {
+                const body = JSON.stringify({ 'fasta': document.getElementById("textarea").value });
+                fetch("/graph/custom", { method, headers, body })
+                    .then((res) => res.json())
+                    .then(function (myJson) {
+                        if (Object.keys(myJson).length != 0) {
+                            this.nodes = vgExtractNodes(myJson);
+                            this.tracks = vgExtractTracks(myJson);
+                            // this.reads = vgExtractReads(this.nodes, this.tracks, []);
+                            create({
+                                svgID: '#svg',
+                                nodes: this.nodes,
+                                tracks: this.tracks
+                            })
+                        }
+                    })
+                    .catch(console.error);
+            } else if (submitType === 2) {
+                const nogname = document.getElementById("nogname").value;
+                fetch("/graph/eggNOG/" + nogname, { method, headers})
+                    .then((res) => res.json())
+                    .then(function (myJson) {
+                        if (Object.keys(myJson).length != 0) {
+                            this.nodes = vgExtractNodes(myJson);
+                            this.tracks = vgExtractTracks(myJson);
+                            // this.reads = vgExtractReads(this.nodes, this.tracks, []);
+                            create({
+                                svgID: '#svg',
+                                nodes: this.nodes,
+                                tracks: this.tracks
+                            })
+                        }
+                    })
+                    .catch(console.error);
+            } else {
+                console.log('Unknown submit')
+                return 1
+            }
+
+           
         },
         compressNodes: function(){
             // this.isCompressed = !this.isCompressed

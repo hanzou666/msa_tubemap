@@ -42,16 +42,18 @@ def browse_tubemap():
     return render_template('index.html')
 
 
-@app.route('/graph', methods=['POST'])
-def output_graph():
-    if request.json['type'] == 'custom':
-        vg_like_graph = parse_paste(request.json['fasta'])
-    elif request.json['type'] == 'eggnog':
-        url = eggnog_url_syntax + request.json['nogname']
-        print(url)
-        # url = 'http://eggnogapi.embl.de/nog_data/json/trimmed_alg/ENOG410ZSWV'
-        data = requests.get(url).json()
-        vg_like_graph = parse_paste(data['raw_alg'])
+@app.route('/graph/custom', methods=['POST'])
+def graph_from_custom_data():
+    vg_like_graph = parse_paste(request.json['fasta'])
+    return jsonify(vg_like_graph)
+
+
+@app.route('/graph/eggNOG/<nogname>', methods=['POST'])
+def graph_from_eggNOG_api(nogname):
+    url = eggnog_url_syntax + nogname
+    print(url)
+    data = requests.get(url).json()
+    vg_like_graph = parse_paste(data['raw_alg'])
     return jsonify(vg_like_graph)
 
 
@@ -79,4 +81,4 @@ def parse_demo_data():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
