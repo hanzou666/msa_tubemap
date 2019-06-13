@@ -12,6 +12,7 @@ flask = "*"
 gunicorn = "*"
 requests = "*"
 pipfile = "*"
+requests-cache = "*"
 
 [requires]
 python_version = "3.7"
