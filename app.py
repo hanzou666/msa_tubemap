@@ -4,7 +4,6 @@
 from datetime import timedelta
 
 import requests
-# import requests_cache
 from flask import Flask, render_template, request, jsonify
 
 from api.msa2gfa import msa2gfa
@@ -23,9 +22,6 @@ class CustomFlask(Flask):
 
 
 eggnog_url_syntax = 'http://eggnogapi.embl.de/nog_data/json/trimmed_alg/'
-
-# requests_cache.install_cache(
-    # cache_name='eggNOG', backend='sqlite', expire_after=timedelta(hours=1))
 
 app = CustomFlask(__name__)
 
