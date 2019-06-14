@@ -4,7 +4,7 @@
 from datetime import timedelta
 
 import requests
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session
 
 from api.msa2gfa import msa2gfa
 
@@ -45,6 +45,8 @@ def graph_from_custom_data():
 
 @app.route('/graph/eggNOG/<nogname>', methods=['POST'])
 def graph_from_eggNOG_api(nogname):
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(minutes=30)
     url = eggnog_url_syntax + nogname
     print(url)
     data = requests.get(url).json()
