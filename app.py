@@ -45,15 +45,15 @@ def graph_from_custom_data():
 
 @app.route('/graph/eggNOG/<nogname>', methods=['POST'])
 def graph_from_eggNOG_api(nogname):
-    session.permanent = True
-    app.permanent_session_lifetime = timedelta(minutes=30)
-    url = eggnog_url_syntax + nogname
-    print(url)
-    data = requests.get(url).json()
-    print(data.keys())
-    fasta_dic = parse_fasta_str(data['raw_alg'])
-    print(len(fasta_dic))
-    return jsonify(mfa2graph(fasta_dic))
+    import time
+    time.sleep(10)
+    # url = eggnog_url_syntax + nogname
+    # print(url)
+    # data = requests.get(url).json()
+    # print(data.keys())
+    # fasta_dic = parse_fasta_str(data['raw_alg'])
+    # print(len(fasta_dic))
+    return jsonify(mfa2graph({}))
 
 
 def parse_fasta_str(fasta_str):
