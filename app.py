@@ -48,9 +48,9 @@ def graph_from_eggNOG_api(nogname):
     url = eggnog_url_syntax + nogname
     print(url)
     data = requests.get(url).json()
-    print(data)
+    print(data.keys())
     fasta_dic = parse_fasta_str(data['raw_alg'])
-    print(data)
+    print(len(fasta_dic))
     return jsonify(mfa2graph(fasta_dic))
 
 
