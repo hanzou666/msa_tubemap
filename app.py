@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+from datetime import timedelta
+
+import requests
+# import requests_cache
 from flask import Flask, render_template, request, jsonify
-# from werkzeug import secure_filename
+
 from api.msa2gfa import msa2gfa
 
 
@@ -18,6 +22,11 @@ class CustomFlask(Flask):
     ))
 
 
+eggnog_url_syntax = 'http://eggnogapi.embl.de/nog_data/json/trimmed_alg/'
+
+# requests_cache.install_cache(
+    # cache_name='eggNOG', backend='sqlite', expire_after=timedelta(hours=1))
+
 app = CustomFlask(__name__)
 
 
@@ -32,34 +41,40 @@ def browse_tubemap():
     return render_template('index.html')
 
 
-@app.route('/graph', methods=['POST'])
-def output_graph():
-    if request.json['type'] == 'paste':
-        vg_like_graph = parse_paste(request.json['fasta'])
-    elif request.json['type'] == 'demo':
-        vg_like_graph = parse_demo_data()
-    return jsonify(vg_like_graph)
+@app.route('/graph/custom', methods=['POST'])
+def graph_from_custom_data():
+    fasta_dic = parse_fasta_str(request.json['fasta'])
+    return jsonify(mfa2graph(fasta_dic))
 
 
-def parse_paste(fasta_str):
+@app.route('/graph/eggNOG/<nogname>', methods=['POST'])
+def graph_from_eggNOG_api(nogname):
+    url = eggnog_url_syntax + nogname
+    print(url)
+    data = requests.get(url).json()
+    fasta_dic = parse_fasta_str(data['raw_alg'])
+    return jsonify(mfa2graph(fasta_dic))
+
+
+def parse_fasta_str(fasta_str):
     fasta_dic = {}
     for tmpline in fasta_str.split('\n'):
         if len(tmpline) < 1:
             continue
         if tmpline[0] == '>':
+            if (len(fasta_dic) > 100):
+                return fasta_dic
             header = tmpline.rstrip().split()
             seq_name = header[0][1:]
             fasta_dic[seq_name] = ''
         else:
             fasta_dic[seq_name] += tmpline.rstrip()
-    if fasta_dic == {}:
+    return fasta_dic
+
+
+def mfa2graph(fasta_dic):
+    if len(fasta_dic) == 0:
         return {}
-    vg_like_graph, _ = msa2gfa.extract_graph(fasta_dic, 1)
-    return vg_like_graph
-
-
-def parse_demo_data():
-    fasta_dic = msa2gfa.parse_fasta('./demo_data/toy_data/msa.fa')
     vg_like_graph, _ = msa2gfa.extract_graph(fasta_dic, 1)
     return vg_like_graph
 
