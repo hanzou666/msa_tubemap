@@ -46,7 +46,7 @@ def graph_from_custom_data():
 @app.route('/graph/eggNOG/<nogname>', methods=['POST'])
 def graph_from_eggNOG_api(nogname):
     import time
-    time.sleep(10)
+    time.sleep(30)
     # url = eggnog_url_syntax + nogname
     # print(url)
     # data = requests.get(url).json()
