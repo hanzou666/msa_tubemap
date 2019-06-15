@@ -1,5 +1,7 @@
 import responder
 
-api = responder.API()
+api = responder.API(
+    templates_dir="msatubemap/templates"
+)
 
 import msatubemap.views
