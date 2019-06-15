@@ -21,6 +21,15 @@ def parse_fasta_file(fasta_file):
     return msa2gfa.parse_fasta(fasta_file)
 
 
+def parse_fasta(seq_data, datatype="str"):
+    if datatype == "str":
+        return parse_fasta_str(seq_data)
+    elif datatype == "file":
+        return parse_fasta_file(seq_data)
+    else:
+        return {}
+
+
 def fa2graph(fasta_dic):
     if len(fasta_dic) == 0:
         return {}
@@ -29,8 +38,5 @@ def fa2graph(fasta_dic):
 
 
 def get_graph(seq_data, datatype="str"):
-    if datatype == "str":
-        fasta_dic = parse_fasta_str(seq_data)
-    elif datatype == "file":
-        fasta_dic = parse_fasta_file(seq_data)
+    fasta_dic = parse_fasta(seq_data, datatype)
     return fa2graph(fasta_dic)
