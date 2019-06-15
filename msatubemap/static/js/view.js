@@ -29,7 +29,7 @@ let app = new Vue({
             } else if (submitType === 2) {
                 body = {}
                 console.log
-                url = "/graph/eggNOG/" + this.nogname;
+                url = "/graph/eggnog/" + this.nogname;
             }
 
             fetch(url, { method, headers, body })
