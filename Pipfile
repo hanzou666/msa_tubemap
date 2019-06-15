@@ -16,6 +16,6 @@ pipfile = "*"
 python_version = "3.7"
 
 [scripts]
-start = "python3 app.py"
+start = "python3 api.py"
 lint = "flake8 ."
 fix = "autopep8 -ivr ."
