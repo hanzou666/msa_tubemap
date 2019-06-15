@@ -28,7 +28,6 @@ let app = new Vue({
                 url = "/graph/custom";
             } else if (submitType === 2) {
                 body = {}
-                console.log
                 url = "/graph/eggnog/" + this.nogname;
             }
 
