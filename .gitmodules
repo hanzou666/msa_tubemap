@@ -1,0 +1,3 @@
+[submodule "msatubemap/logic/msa2gfa"]
+	path = msatubemap/logic/msa2gfa
+	url = https://github.com/hanzou666/msa2gfa.git
