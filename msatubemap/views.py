@@ -1,11 +1,5 @@
 from msatubemap import api
 
-
-api.add_route("/browser", Browser)
-api.add_route("/graph/custom", GraphFromCustom)
-api.add_route("/graph/eggnog/{nogname}", GraphFromEggNOG)
-
-
 class Browser():
     def on_get(self, req, resp):
         resp.html = api.template("index.html")
@@ -18,4 +12,8 @@ class GraphFromCustom():
 
 class GraphFromEggNOG():
     def on_post(self, req, resp, nogname):
-        resp.media = {"hoge": "hoge"}
+        resp.media = {"hoge": nogname}
+
+api.add_route("/browser", Browser)
+api.add_route("/graph/custom", GraphFromCustom)
+api.add_route("/graph/eggnog/{nogname}", GraphFromEggNOG)
