@@ -1,4 +1,4 @@
-from msatubemap import api
+from msatubemap import api, graph_processing
 
 class Browser():
     def on_get(self, req, resp):
@@ -6,8 +6,9 @@ class Browser():
 
 
 class GraphFromCustom():
-    def on_post(self, req, resp):
-        resp.media = {"hello": "hoge"}
+    async def on_post(self, req, resp):
+        data = await req.media()
+        resp.media = graph_processing.get_graph(data['fasta'])
 
 
 class GraphFromEggNOG():
