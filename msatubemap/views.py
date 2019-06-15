@@ -1,4 +1,7 @@
+import requests
+
 from msatubemap import api, graph_processing
+
 
 class Browser():
     def on_get(self, req, resp):
@@ -12,8 +15,16 @@ class GraphFromCustom():
 
 
 class GraphFromEggNOG():
+    def __init__(self):
+        self.eggnog_url_syntax = 'http://eggnogapi.embl.de/nog_data/json/trimmed_alg'
+
     def on_post(self, req, resp, nogname):
-        resp.media = {"hoge": nogname}
+        url = self.construct_url(nogname)
+        data = requests.get(url).json()
+        resp.media = graph_processing.get_graph(data['raw_alg'])
+
+    def construct_url(self, nogname):
+        return self.eggnog_url_syntax + '/' + nogname
 
 
 api.add_route("/browser", Browser)
