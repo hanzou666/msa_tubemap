@@ -1,11 +1,6 @@
-import responder
+#!/usr/bin/env python3
 
-api = responder.API()
-
-
-@api.route("/")
-async def hello(req, resp):
-    resp.text = "hello, world!"
+from msatubemap import api
 
 if __name__ == "__main__":
     api.run()

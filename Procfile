@@ -1,1 +1,2 @@
-web: python3 run.py
+web: uvicorn run:api --debug
+
