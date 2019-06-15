@@ -1,10 +1,21 @@
 from msatubemap import api
 
-@api.route("/")
-async def hello(req, resp):
-    resp.text = "hello, world!"
+
+api.add_route("/browser", Browser)
+api.add_route("/graph/custom", GraphFromCustom)
+api.add_route("/graph/eggnog/{nogname}", GraphFromEggNOG)
 
 
-@api.route("/{name}")
-async def hoge(rep, resp, name):
-    resp.text = f"Welcome {name}!"
+class Browser():
+    def on_get(self, req, resp):
+        resp.html = api.template("index.html")
+
+
+class GraphFromCustom():
+    def on_post(self, req, resp):
+        resp.media = {"hello": "hoge"}
+
+
+class GraphFromEggNOG():
+    def on_post(self, req, resp, nogname):
+        resp.media = {"hoge": "hoge"}
