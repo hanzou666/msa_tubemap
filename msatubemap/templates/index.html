@@ -71,13 +71,26 @@
                         </div>
                     </div>
                 </div>
+                <p><div id="notExist"></div></p>
             </div>
 
+
             <div class="container">
-                <div class="tubemap">
-                    <svg id="svg"></svg>
+                <div v-show="loading" class="loader">Now loading...</div>
+                <div v-show="!loading">
+                    <div v-show="!notFound">
+                        <div v-show="!rendering">
+                            <div class="tubemap">
+                                <svg id="svg"></svg>
+                            </div>
+                        </div>
+                        <div v-show="rendering">Now rendering...</div>
+
+                        <div id="legendDiv"></div>
+                    </div>
+                    <div v-show="notFound">Not Found</div>
                 </div>
-                <div id="legendDiv"></div>
+
                 <!-- <div id="legendDiv"></div> -->
             </div>
             <div class="container">
