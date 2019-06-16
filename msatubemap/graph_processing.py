@@ -7,7 +7,7 @@ def parse_fasta_str(fasta_str):
         if len(tmpline) < 1:
             continue
         if tmpline[0] == '>':
-            if (len(fasta_dic) >= 100):
+            if (len(fasta_dic) >= 50):
                 return fasta_dic
             header = tmpline.rstrip().split()
             seq_name = header[0][1:]
