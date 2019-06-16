@@ -1,6 +1,14 @@
 # MSA Tube Map
 
-## Start
+MSA Tube Map is a wrapper of [Sequence Tube Maps](https://github.com/vgteam/sequenceTubeMap)
+
+## Usage
+
+### Online Version
+
+Go to `https://msatubemap.herokuapp.com/browser`
+
+### Run on your local environment
 
 ```bash
 git clone --recursive https://github.com/hanzou666/msa_tubemap.git
@@ -9,8 +17,9 @@ pipenv install
 pipenv run start
 ```
 
-Go to `http://localhost:5000/msa_tubemap`
+Go to `http://localhost:5042/browser`
 
 ## Input file
 
-This application accepts a FASTA format file after multiple sequence alignment.
+MSA Tube Map uses a FASTA format file after multiple sequence alignment.
+Either nucleotide or protein sequences are acceptable.
