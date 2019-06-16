@@ -22,6 +22,7 @@ let app = new Vue({
             event.preventDefault();
             this.loading = true;
             this.notFound = false;
+            d3.selectAll("svg > *").remove();
             const method = "POST";
             const headers = {
                 'Accept': 'application/json',
@@ -45,7 +46,6 @@ let app = new Vue({
                     } else {
                         this.loading = false;
                         this.notFound = true;
-                        d3.selectAll("svg > *").remove();
                         return Promise.reject(new Error(this.nogname + " not found."));
                     }
                 })
