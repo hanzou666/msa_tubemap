@@ -12,10 +12,16 @@ let app = new Vue({
         // nodeWidth: 0
         isCompressed: false,
         nogname: null,
+        smallFasta: ">spp.1\nATGCGTACTAGTAC\n>spp.2\nATGCGTA---GTAC\n>spp.3\nATGCCTACTAGTAC",
+        loading: false,
+        notFound: false,
+        rendering: false,
     },
     methods: {
         tubemapHandler: function(submitType, event) {
             event.preventDefault();
+            this.loading = true;
+            this.notFound = false;
             const method = "POST";
             const headers = {
                 'Accept': 'application/json',
@@ -28,22 +34,32 @@ let app = new Vue({
                 url = "/graph/custom";
             } else if (submitType === 2) {
                 body = {}
-                console.log
-                url = "/graph/eggNOG/" + this.nogname;
+                url = "/graph/eggnog/" + this.nogname;
             }
 
             fetch(url, { method, headers, body })
-                .then((res) => res.json())
-                .then(function (myJson) {
+                .then(res => {
+                    if (res.ok) {
+                        this.loading = false;
+                        return res.json();
+                    } else {
+                        this.loading = false;
+                        this.notFound = true;
+                        d3.selectAll("svg > *").remove();
+                        return Promise.reject(new Error(this.nogname + " not found."));
+                    }
+                })
+                .then(function(myJson) {
                     if (Object.keys(myJson).length != 0) {
                         this.nodes = vgExtractNodes(myJson);
                         this.tracks = vgExtractTracks(myJson);
-                        // this.reads = vgExtractReads(this.nodes, this.tracks, []);
+                        this.rendering = true;
                         create({
                             svgID: '#svg',
                             nodes: this.nodes,
                             tracks: this.tracks
                         })
+                        this.rendering = false;
                     }
                 })
                 .catch(console.error);

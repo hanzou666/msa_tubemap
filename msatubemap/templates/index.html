@@ -9,6 +9,7 @@
 
     <body>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/css/style.css">
         <div class="container">
             <header>
                 <h1>MSA tubemapper (alpha)</h1>
@@ -16,39 +17,48 @@
         </div>
 
         <hr>
-        <div id='app'>
 
+        <div id='app'>
             <div class="container">
                 <ul class="nav nav-tabs" id="tab-item">
                     <li class="nav-item">
-                        <a href="#tab_paste" class="nav-link" data-toggle="tab">Custom data</a>
+                        <a href="#tab_custom" class="nav-link active" data-toggle="tab">Custom data</a>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a href="#tab_upload" class="nav-link" data-toggle="tab">Upload</a>
-                    </li> -->
                     <li class="nav-item">
-                        <a href="#tab_demo" class="nav-link active" data-toggle="tab">EggNOG group</a>
+                        <a href="#tab_eggnog" class="nav-link" data-toggle="tab">EggNOG group</a>
                     </li>
                 </ul>
 
                 <div class="tab-content" id="tab-content">
-                    <div id="tab_paste" class="tab-pane">
+                    <div id="tab_custom" class="tab-pane active">
                         <div class="container">
-                            <form action="/browse_tubemap" method="post">
-                            <div class="form-group">
-                                    <label for="textarea"><br>Paste a set of sequence in FASTA format from multiple alignment tools such as MAFFT or Clustal Omega</label>
-                                    <textarea id="textarea" name="textarea" rows="5" style="width: 100%" class="form-control"
-                                        placeholder="FASTA format" wrap="off"></textarea>
+                            <form action="/browser" method="post">
+                                <div class="form-group">
+                                    <label for="textarea">
+                                        <br>
+                                        Paste multiple sequence alignment in FASTA format
+                                        <font size="2">     (Notice: Up to 50 sequences are used to construct graph)</font>
+                                    </label>
+                                    <!-- <button v-tooltip="sizeRestrictionMessage">Notice!</button> -->
+                                    <textarea id="textarea" name="textarea" rows="6" 
+                                        style="width: 100%" class="form-control form-control-sm"
+                                        placeholder="FASTA format" wrap="off"
+                                        v-model="smallFasta">
+                                    </textarea>
                                 </div>
                                 <button class="btn btn-primary" v-on:click="tubemapHandler(0, $event)">Submit</button>
-                                <!-- <button type="button" class="btn btn-primary" id="form-button">Submit</button> -->
                             </form>
+
                         </div>
                     </div>
-                    <div id="tab_demo" class="tab-pane active">
+                    <div id="tab_eggnog" class="tab-pane">
                         <div class="container">
                             <div class="form-group">
-                                <label for="nogname"><br>Search amino acid sequences from a eggNOG group name (Notice: use only 100 sequences)</label>
+                                <label for="nogname">
+                                    <br>
+                                    Search amino acid sequences from an eggNOG group name
+                                    <font size="2">     (Notice: Up to 50 sequences are used to construct graph)</font>
+                                </label>
                                 <div class="row">
                                     <div class="col-md-4" >
                                         <input type="text" v-model="nogname" class="form-control" placeholder="e.g. ENOG410ZSWV or COG0575">
@@ -61,17 +71,29 @@
                         </div>
                     </div>
                 </div>
+                <p><div id="notExist"></div></p>
             </div>
 
+
             <div class="container">
-                <div class="tubemap">
-                    <svg id="svg"></svg>
+                <div v-show="loading" class="loader">Now loading...</div>
+                <div v-show="!loading">
+                    <div v-show="!notFound">
+                        <div v-show="!rendering">
+                            <div class="tubemap">
+                                <svg id="svg"></svg>
+                            </div>
+                        </div>
+                        <div v-show="rendering">Now rendering...</div>
+
+                        <div id="legendDiv"></div>
+                    </div>
+                    <div v-show="notFound">Not Found</div>
                 </div>
-                <div id="legendDiv"></div>
+
                 <!-- <div id="legendDiv"></div> -->
             </div>
             <div class="container">
-                <!-- <input type="radio" id="compressed" value -->
                 <label for="checkCompressed">Compressed:</label>
                     <input type="checkbox" name="checkbox" id="checkCompressed" v-model="isCompressed" @change="compressNodes">
             </div>
@@ -98,14 +120,6 @@
                     <input type="radio" id="reds" name="radio" class="btn-primary" values="reds" v-model="haplotypeColors" @click="changeColor('reds')">
                 </label>
             </div>
-
-
-
-            <!-- <div class="container">
-                <pre>
-                    [[ $data ]]
-                </pre>
-            </div> -->
         </div>
 
 
