@@ -16,14 +16,12 @@ let app = new Vue({
         loading: false,
         notFound: false,
         rendering: false,
-        visualizing: false,
     },
     methods: {
         tubemapHandler: function(submitType, event) {
             event.preventDefault();
             this.loading = true;
             this.notFound = false;
-            this.visualizing = false;
             d3.selectAll("svg > *").remove();
             const method = "POST";
             const headers = {
@@ -62,7 +60,6 @@ let app = new Vue({
                             tracks: this.tracks
                         })
                         this.rendering = false;
-                        this.visualizing = true;
                     }
                 })
                 .catch(console.error);
