@@ -12,6 +12,7 @@ let app = new Vue({
         // nodeWidth: 0
         isCompressed: false,
         nogname: null,
+        smallFasta: ">spp.1\nATGCGTACTAGTAC\n>spp.2\nATGCGTA---GTAC\n>spp.3\nATGCCTACTAGTAC",
     },
     methods: {
         tubemapHandler: function(submitType, event) {
