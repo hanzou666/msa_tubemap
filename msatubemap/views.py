@@ -20,8 +20,11 @@ class GraphFromEggNOG():
 
     def on_post(self, req, resp, nogname):
         url = self.construct_url(nogname)
-        data = requests.get(url).json()
-        resp.media = graph_processing.get_graph(data['raw_alg'])
+        data = requests.get(url)
+        if data.status_code == 200 and 'raw_alg' in data.keys():
+            resp.media = graph_processing.get_graph(data.json()['raw_alg'])
+        else:
+            resp.status_code = 404
 
     def construct_url(self, nogname):
         return self.eggnog_url_syntax + '/' + nogname
