@@ -32,6 +32,7 @@ let app = new Vue({
     methods: {
         tubemapHandler: function(submitType, event) {
             event.preventDefault();
+            d3.select('#svg').selectAll('*').remove();
             this.loading = true;
             this.notFound = false;
             const method = "POST";
