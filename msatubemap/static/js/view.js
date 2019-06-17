@@ -21,7 +21,7 @@ let app = new Vue({
         haplotypeColors: function() {
             setColorSet('haplotypeColors', this.haplotypeColors);
         },
-        compressNodes: function() {
+        isCompressed: function() {
             setNodeWidthOption(this.isCompressed ? 2 : 0);
         },
     },
