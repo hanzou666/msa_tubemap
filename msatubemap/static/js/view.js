@@ -19,10 +19,14 @@ let app = new Vue({
     },
     watch: {
         haplotypeColors: function() {
-            setColorSet('haplotypeColors', this.haplotypeColors);
+            if (document.getElementById('svg').attributes.length != 1) {
+                setColorSet('haplotypeColors', this.haplotypeColors);
+            }
         },
         isCompressed: function() {
-            setNodeWidthOption(this.isCompressed ? 2 : 0);
+            if (document.getElementById('svg').attributes.length != 1) {
+                setNodeWidthOption(this.isCompressed ? 2 : 0);
+            }
         },
     },
     methods: {
@@ -30,7 +34,6 @@ let app = new Vue({
             event.preventDefault();
             this.loading = true;
             this.notFound = false;
-            d3.selectAll("svg > *").remove();
             const method = "POST";
             const headers = {
                 'Accept': 'application/json',
