@@ -74,6 +74,19 @@
                 <p><div id="notExist"></div></p>
             </div>
 
+            <div class="container">
+                <label for="checkCompressed">&nbsp;&nbsp;Compressed:</label>
+                <input type="checkbox" name="checkbox" id="checkCompressed" v-model="isCompressed">
+            </div>
+            
+            <div class="container">
+                <template v-for="tmpColors in haplotypeColorsList">
+                    <label v-bind:for="tmpColors">&nbsp;&nbsp;[[ tmpColors ]]:</label>
+                    <input type="radio" v-bind:id="tmpColors" name="radio" class="btn-primary" v-bind:value="tmpColors"
+                        v-model="haplotypeColors">
+                </template>
+            </div>
+
 
             <div class="container">
                 <div v-show="loading" class="loader">Now loading...</div>
@@ -82,27 +95,15 @@
                         <div v-show="!rendering">
                             <div class="tubemap">
                                 <svg id="svg"></svg>
+                                <div id="legendDiv"></div>
                             </div>
                         </div>
                         <div v-show="rendering">Now rendering...</div>
-
-                        <div id="legendDiv"></div>
                     </div>
                     <div v-show="notFound">Not Found</div>
                 </div>
 
                 <!-- <div id="legendDiv"></div> -->
-            </div>
-            <div class="container">
-                <label for="checkCompressed">Compressed:</label>
-                    <input type="checkbox" name="checkbox" id="checkCompressed" v-model="isCompressed">
-            </div>
-            
-            <div class="container">
-                <template v-for="tmpColors in haplotypeColorsList">
-                    <label v-bind:for="tmpColors">[[ tmpColors ]]</label>
-                    <input type="radio" v-bind:id="tmpColors" name="radio" class="btn-primary" v-bind:value="tmpColors" v-model="haplotypeColors">
-                </template>
             </div>
         </div>
 
