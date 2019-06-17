@@ -95,30 +95,14 @@
             </div>
             <div class="container">
                 <label for="checkCompressed">Compressed:</label>
-                    <input type="checkbox" name="checkbox" id="checkCompressed" v-model="isCompressed" @change="compressNodes">
+                    <input type="checkbox" name="checkbox" id="checkCompressed" v-model="isCompressed">
             </div>
             
             <div class="container">
-                <label for="plainColors">
-                    plainColors:
-                    <input type="radio" id="plainColors" name="radio" class="btn-primary" value="plainColors" v-model="haplotypeColors" @click="changeColor('plainColors')">
-                </label>
-                <label for="lightColors">
-                    lightColors:
-                    <input type="radio" id="lightColors" name="radio" class="btn-primary" value="lightColors" v-model="haplotypeColors" @click="changeColor('lightColors')">
-                </label>
-                <label for="greys">
-                    greys:
-                    <input type="radio" id="greys" name="radio" class="btn-primary" value="greys" v-model="haplotypeColors" @click="changeColor('greys')">
-                </label>
-                <label for="blues">
-                    blues:
-                    <input type="radio" id="blues" name="radio" class="btn-primary" value="blues" v-model="haplotypeColors" @click="changeColor('blues')">
-                </label>
-                <label for="reds">
-                    reds:
-                    <input type="radio" id="reds" name="radio" class="btn-primary" values="reds" v-model="haplotypeColors" @click="changeColor('reds')">
-                </label>
+                <template v-for="tmpColors in haplotypeColorsList">
+                    <label v-bind:for="tmpColors">[[ tmpColors ]]</label>
+                    <input type="radio" v-bind:id="tmpColors" name="radio" class="btn-primary" v-bind:value="tmpColors" v-model="haplotypeColors">
+                </template>
             </div>
         </div>
 

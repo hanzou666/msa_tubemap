@@ -17,6 +17,14 @@ let app = new Vue({
         notFound: false,
         rendering: false,
     },
+    watch: {
+        haplotypeColors: function() {
+            setColorSet('haplotypeColors', this.haplotypeColors);
+        },
+        compressNodes: function() {
+            setNodeWidthOption(this.isCompressed ? 2 : 0);
+        },
+    },
     methods: {
         tubemapHandler: function(submitType, event) {
             event.preventDefault();
@@ -64,12 +72,5 @@ let app = new Vue({
                 })
                 .catch(console.error);
         },
-        compressNodes: function(){
-            // this.isCompressed = !this.isCompressed
-            setNodeWidthOption(this.isCompressed ? 2 : 0);
-        },
-        changeColor: function(color) {
-            setColorSet('haplotypeColors', color);
-        }
     }
 })
