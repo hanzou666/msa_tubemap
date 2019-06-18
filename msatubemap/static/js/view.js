@@ -17,12 +17,24 @@ let app = new Vue({
         notFound: false,
         rendering: false,
     },
+    watch: {
+        haplotypeColors: function() {
+            if (document.getElementById('svg').attributes.length != 1) {
+                setColorSet('haplotypeColors', this.haplotypeColors);
+            }
+        },
+        isCompressed: function() {
+            if (document.getElementById('svg').attributes.length != 1) {
+                setNodeWidthOption(this.isCompressed ? 2 : 0);
+            }
+        },
+    },
     methods: {
         tubemapHandler: function(submitType, event) {
             event.preventDefault();
+            d3.select('#svg').selectAll('*').remove();
             this.loading = true;
             this.notFound = false;
-            d3.selectAll("svg > *").remove();
             const method = "POST";
             const headers = {
                 'Accept': 'application/json',
@@ -64,12 +76,5 @@ let app = new Vue({
                 })
                 .catch(console.error);
         },
-        compressNodes: function(){
-            // this.isCompressed = !this.isCompressed
-            setNodeWidthOption(this.isCompressed ? 2 : 0);
-        },
-        changeColor: function(color) {
-            setColorSet('haplotypeColors', color);
-        }
     }
 })

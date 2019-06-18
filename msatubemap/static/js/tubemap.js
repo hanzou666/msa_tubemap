@@ -931,7 +931,7 @@ SOFTWARE.
     // resize svg depending on drawing size
     // this feels dirty, but changing the attributes of the 'svg'-Variable does not have the desired effect
     var svg2 = d3.select(svgID);
-    svg2.attr('height', (maxYCoordinate - minYCoordinate + 50) * 1.5);
+    svg2.attr('height', Math.min((maxYCoordinate - minYCoordinate + 50) * 1.5, 600));
     // svg2.attr('height', 800);
     svg2.attr('width', Math.max(maxXCoordinate, $(svgID).parent().width()));
   }
