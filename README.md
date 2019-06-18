@@ -6,7 +6,7 @@ MSA Tube Map is a wrapper of [Sequence Tube Maps](https://github.com/vgteam/sequ
 
 ### Online Version
 
-Go to `https://msatubemap.herokuapp.com/browser`
+Go to `https://msatubemap.herokuapp.com/msatubemap`
 
 ### Run on your local environment
 
@@ -17,7 +17,7 @@ pipenv install
 pipenv run start
 ```
 
-Go to `http://localhost:5042/browser`
+Go to `http://localhost:5042/msatubemap`
 
 ## Input file
 

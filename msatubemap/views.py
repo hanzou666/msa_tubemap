@@ -8,6 +8,11 @@ class Browser():
         resp.html = api.template("index.html")
 
 
+class Root():
+    def on_get(self, req, resp):
+        api.redirect(resp, "/msatubemap")
+
+
 class GraphFromCustom():
     async def on_post(self, req, resp):
         data = await req.media()
@@ -30,6 +35,7 @@ class GraphFromEggNOG():
         return self.eggnog_url_syntax + '/' + nogname
 
 
-api.add_route("/browser", Browser)
+api.add_route("/", Root)
+api.add_route("/msatubemap", Browser)
 api.add_route("/graph/custom", GraphFromCustom)
 api.add_route("/graph/eggnog/{nogname}", GraphFromEggNOG)
