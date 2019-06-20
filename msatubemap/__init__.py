@@ -5,4 +5,6 @@ api = responder.API(
     static_dir='msatubemap/static'
 )
 
+MAX_HAPLOTYPE = 50
+
 import msatubemap.views
