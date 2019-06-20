@@ -3,14 +3,14 @@ import requests
 from msatubemap import api, graph_processing
 
 
-class Browser():
-    def on_get(self, req, resp):
-        resp.html = api.template("index.html")
-
-
 class Root():
     def on_get(self, req, resp):
         api.redirect(resp, "/msatubemap")
+
+
+class Browser():
+    def on_get(self, req, resp):
+        resp.html = api.template("index.html")
 
 
 class GraphFromCustom():

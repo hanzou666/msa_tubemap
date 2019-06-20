@@ -3,16 +3,12 @@ let app = new Vue({
     delimiters: ["[[", "]]"],
     data: {
         // svgID: "\#" + "svg",
-        nodes: null,
-        tracks: null,
-        reads: null,
         haplotypeColors: 'plainColors',
-        tmpColor: null,
         haplotypeColorsList: ['plainColors', 'lightColors', 'greys', 'blues', 'reds'],
         // nodeWidth: 0
         isCompressed: false,
         nogname: null,
-        smallFasta: ">spp.1\nATGCGTACTAGTAC\n>spp.2\nATGCGTA---GTAC\n>spp.3\nATGCCTACTAGTAC",
+        fastaStr: ">spp.1\nATGCGTACTAGTAC\n>spp.2\nATGCGTA---GTAC\n>spp.3\nATGCCTACTAGTAC",
         loading: false,
         notFound: false,
         rendering: false,
@@ -43,7 +39,7 @@ let app = new Vue({
             let body;
             let url;
             if (submitType === 0) {
-                body = JSON.stringify({ 'fasta': document.getElementById("textarea").value });
+                body = JSON.stringify({ 'fasta': this.fastaStr });
                 url = "/graph/custom";
             } else if (submitType === 2) {
                 body = {}
@@ -63,13 +59,11 @@ let app = new Vue({
                 })
                 .then(function(myJson) {
                     if (Object.keys(myJson).length != 0) {
-                        this.nodes = vgExtractNodes(myJson);
-                        this.tracks = vgExtractTracks(myJson);
                         this.rendering = true;
                         create({
                             svgID: '#svg',
-                            nodes: this.nodes,
-                            tracks: this.tracks
+                            nodes: vgExtractNodes(myJson),
+                            tracks: vgExtractTracks(myJson)
                         })
                         this.rendering = false;
                     }
