@@ -3,11 +3,6 @@ import requests
 from msatubemap import api, graph_processing
 
 
-class Root():
-    def on_get(self, req, resp):
-        api.redirect(resp, "/msatubemap")
-
-
 class Browser():
     def on_get(self, req, resp):
         resp.html = api.template("index.html")
@@ -35,7 +30,6 @@ class GraphFromEggNOG():
         return self.eggnog_url_syntax + '/' + nogname
 
 
-api.add_route("/", Root)
-api.add_route("/msatubemap", Browser)
+api.add_route("/msatubemap", Browser, static=True)
 api.add_route("/graph/custom", GraphFromCustom)
 api.add_route("/graph/eggnog/{nogname}", GraphFromEggNOG)
