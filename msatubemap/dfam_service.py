@@ -43,7 +43,6 @@ def get(species=None, words=None):
     response = requests.get(f"https://dfam.org/api/families?{'&'.join(query_params)}")
     if response.status_code == requests.codes.ok:
         results = json.loads(response.text)["results"]
-        print(results)
         annotations = [Annotation(name=result["name"], url=f"https://dfam.org/family/{result['accession']}/summary") for result in results]
         return AnnotationResultSet.build(annotations)
     return AnnotationErrorResultSet(error_code=response.status_code, error_message=response.text)
