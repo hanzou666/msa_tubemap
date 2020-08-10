@@ -1,6 +1,6 @@
 import requests
 
-from msatubemap import api, graph_processing
+from msatubemap import api, graph_processing, dfam_service
 
 
 class Browser():
@@ -30,6 +30,15 @@ class GraphFromEggNOG():
         return self.eggnog_url_syntax + '/' + nogname
 
 
+class DfamSearch():
+    def on_get(self, req, resp):
+        if req.params.get('s') is None and req.params.get('w') is None:
+            resp.status_code = 404
+        else:
+            resp.media = dfam_service.get(req.params.get('s'), req.params.get('w')).to_dict()
+
+
 api.add_route("/msatubemap", Browser, static=True)
 api.add_route("/graph/custom", GraphFromCustom)
 api.add_route("/graph/eggnog/{nogname}", GraphFromEggNOG)
+api.add_route("/api/search/dfam", DfamSearch)
